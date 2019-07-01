@@ -93,7 +93,7 @@ public class EnchantmentHandler
 
 		Transaction t = new Transaction(success, player);
 		if (!t.canAfford) {
-			return null;
+			return t;
 		}
 
 		t.charge();
@@ -119,10 +119,6 @@ public class EnchantmentHandler
 	 */
 	public ItemStack createBook(Player player, ItemStack original, Collection<Enchant> enchantments)
 	{
-		if (enchantments == null || enchantments.size() == 0) {
-			return null;
-		}
-
 		ItemBuilder ib = ItemBuilder.init();
 		ib.setPlaceholders(new HashMap<String, String>() {{
 			put("player", player.getName());
