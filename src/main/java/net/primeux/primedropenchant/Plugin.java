@@ -80,7 +80,7 @@ public class Plugin extends JavaPlugin
 		this.configHandler.loadConfig("config", "config.yml", ConfigType.SETTINGS);
 		this.configHandler.loadConfigs();
 
-		this.configHandler.loadConfig("locale", "locale/" + this.getConfig().getString("locale") + ".yml", ConfigType.RESOURCE);
+		this.configHandler.loadConfig("locale", "locale/" + this.getConfig().getString("locale", "en") + ".yml", ConfigType.RESOURCE);
 		this.configHandler.getConfigByName("locale").load();
 
 		this.enchantmentHandler = new EnchantmentHandler(this);
