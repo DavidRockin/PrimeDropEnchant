@@ -3,6 +3,8 @@ package net.primeux.primedropenchant.events;
 import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.enchanting.Enchant;
+import net.primeux.primedropenchant.gui.GuiHandler;
+import net.primeux.primedropenchant.gui.TransferGui;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -45,11 +47,11 @@ public class PlayerListener implements Listener
 			return;
 		}
 
-		ItemStack book = getPlugin().getEnchantmentHandler().swap(is, p, enchants);
+		/*ItemStack book = getPlugin().getEnchantmentHandler().swap(is, p, enchants);
 		if (null == book) {
 			p.sendMessage("You cannot afford this");
 			return;
-		}
+		}*/
 
 		hand.setAmount(hand.getAmount() - 1);
 		if (hand.getAmount() < 1) {
@@ -60,9 +62,11 @@ public class PlayerListener implements Listener
 		event.setCancelled(true);
 		event.setResult(Event.Result.DENY);
 
-		p.getInventory().addItem(book);
+		GuiHandler.open(p, new TransferGui(plugin, is));
+				
+		//p.getInventory().addItem(book);
 
-		p.sendMessage("You pulled enchantments!");
+		//p.sendMessage("You pulled enchantments!");
 	}
 
 }
