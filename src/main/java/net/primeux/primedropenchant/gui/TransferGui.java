@@ -6,7 +6,6 @@ import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.enchanting.Enchant;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -28,6 +27,8 @@ public class TransferGui extends BaseGui
 
 	@Getter
 	private HashMap<Integer, TransferState> enchantmentIndex = new HashMap();
+
+	private boolean successfulTransfer = false;
 
 	public TransferGui(Plugin plugin, ItemStack source)
 	{
@@ -69,6 +70,15 @@ public class TransferGui extends BaseGui
 		}
 
 		super.open(player);
+	}
+
+	@Override
+	public void close(Player player)
+	{
+		super.close(player);
+		if (!this.successfulTransfer) {
+			this.getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.cancel"));
+		}
 	}
 
 	@Override
@@ -145,14 +155,15 @@ public class TransferGui extends BaseGui
 			ts.setTransfer(! ts.isTransfer());
 		} else if (clicked.getType().equals(this.getFiller().getType())) {
 			if (clicked.getDurability() == (short) 5 && this.transfer()) {
-				this.getPlayer().closeInventory();
-				return;
+				this.successfulTransfer = true;
 			} else if (clicked.getDurability() == (short) 14) {
-				// todo give back item
-				this.getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.cancel"));
-				this.getPlayer().closeInventory();
+				this.successfulTransfer = false;
+			} else {
 				return;
 			}
+
+			this.getPlayer().closeInventory();
+			return;
 		}
 
 		this.render();
