@@ -99,4 +99,14 @@ public class Enchant
 		return this.isConstantPrice() ? this.getCost() : this.getItemStackLevel(itemStack) * this.getCost();
 	}
 
+	/**
+	 * Enchants an itemstack to this enchantment
+	 * @param itemStack
+	 * @param level
+	 */
+	public void enchantItemstack(ItemStack itemStack, int level)
+	{
+		itemStack.addUnsafeEnchantment(this.getEnchantment(), level);
+	}
+
 }

@@ -1,9 +1,14 @@
 package net.primeux.primedropenchant.enchanting;
 
+import lombok.Getter;
+import net.primeux.primedropenchant.Plugin;
+import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,10 +18,18 @@ import java.util.List;
 public class EnchantmentHandler
 {
 
+	@Getter
+	private Plugin plugin;
+
 	/**
 	 * Loaded enchants
 	 */
 	private List<Enchant> enchantments = new ArrayList();
+
+	public EnchantmentHandler(Plugin plugin)
+	{
+		this.plugin = plugin;
+	}
 
 	/**
 	 * Registers an enchant
@@ -54,6 +67,25 @@ public class EnchantmentHandler
 			}
 		}
 		return results;
+	}
+
+	/**
+	 * Creates an enchantment book
+	 * @param player
+	 * @param original
+	 * @param enchantments
+	 * @return
+	 */
+	public ItemStack createBook(Player player, ItemStack original, List<Enchant> enchantments)
+	{
+		ItemBuilder ib = ItemBuilder.init().deserialize(this.getPlugin().getEnchantmentContainers());
+		ib.setPlaceholders(new HashMap<String, String>() {{
+			put("player", player.getName());
+		}});
+
+		ItemStack book = ib.getItemStack();
+		enchantments.forEach(e -> e.enchantItemstack(book, e.getItemStackLevel(original)));
+		return book;
 	}
 
 	/**

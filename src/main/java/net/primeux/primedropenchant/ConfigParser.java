@@ -2,6 +2,7 @@ package net.primeux.primedropenchant;
 
 import lombok.Getter;
 import net.primeux.primedropenchant.enchanting.Enchant;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 
@@ -32,6 +33,17 @@ public class ConfigParser
 	public void load()
 	{
 		this.parseEnchantments();
+		this.parseConfig();
+	}
+
+	private void parseConfig()
+	{
+		getPlugin().setEnchantmentContainers(
+			getConfigSectionValue(
+				this.getConfig().get("enchantmentContainer"),
+				true
+			)
+		);
 	}
 
 	/**
@@ -59,6 +71,29 @@ public class ConfigParser
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * Converts a section to a map.
+	 *
+	 * @param o the base object
+	 * @param deep recursive values
+	 * @return map of config information, null if no data
+	 */
+	public static Map<String, Object> getConfigSectionValue(Object o, boolean deep)
+	{
+		if (o == null) {
+			return null;
+		}
+		Map<String, Object> map;
+		if (o instanceof ConfigurationSection) {
+			map = ((ConfigurationSection) o).getValues(deep);
+		} else if (o instanceof Map) {
+			map = (Map<String, Object>) o;
+		} else {
+			return null;
+		}
+		return map;
 	}
 
 }

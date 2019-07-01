@@ -1,11 +1,14 @@
 package net.primeux.primedropenchant;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
 import net.primeux.primedropenchant.enchanting.EnchantmentHandler;
 import net.primeux.primedropenchant.payment.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Map;
 
 public class Plugin extends JavaPlugin
 {
@@ -20,6 +23,10 @@ public class Plugin extends JavaPlugin
 	private PaymentHandler paymentHandler = new PaymentHandler();
 
 	private ConfigParser configParser = new ConfigParser(this);
+
+	@Getter
+	@Setter
+	private Map<String, Object> enchantmentContainers;
 
 	@Override
 	public void onLoad()
@@ -42,7 +49,7 @@ public class Plugin extends JavaPlugin
 	public void setup()
 	{
 		this.hooks();
-		this.enchantmentHandler = new EnchantmentHandler();
+		this.enchantmentHandler = new EnchantmentHandler(this);
 		this.configParser.load();
 	}
 
