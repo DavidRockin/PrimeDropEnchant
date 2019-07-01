@@ -42,7 +42,7 @@ public class TransferGui extends BaseGui
 		this.inventory = Bukkit.createInventory(
 			owner,
 			9 * 5,
-			ChatColor.AQUA + "Choose Enchants to Keep/Transfer"
+			ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     KEEP     " + ChatColor.DARK_GRAY + "|" + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "   TRANSFER"
 		);
 		this.render();
 	}
@@ -76,17 +76,57 @@ public class TransferGui extends BaseGui
 	protected void render()
 	{
 		ItemStack is;
-		for (Map.Entry<Integer, TransferState> ts : this.enchantmentIndex.entrySet()) {
-			Enchant e = ts.getValue().getEnchant();
+		this.getInventory().clear();
 
-			is = ItemBuilder.init().use(new ItemStack(
-					ts.getValue().isTransfer() ? Material.ENCHANTED_BOOK : Material.BOOK
-			)).setName(e.getEnchantment().getName()).getItemStack();
-			is.addUnsafeEnchantment(e.getEnchantment(), ts.getValue().getLevel());
-			this.inventory.setItem(ts.getKey(), is);
+		for (int y = 4; y < this.getInventory().getSize(); y += 9) {
+			this.getInventory().setItem(y, this.getFiller());
 		}
 
-		this.inventory.setItem(9 * 3, new ItemStack(Material.GREEN_RECORD));
+		int col1 = 0, col2 = 5;
+
+		for (TransferState ts : this.enchantmentIndex.values()) {
+			Enchant e = ts.getEnchant();
+
+			is = ItemBuilder.init().use(new ItemStack(Material.ENCHANTED_BOOK))
+					.setName(e.getEnchantment().getName())
+					.getItemStack();
+			is.addUnsafeEnchantment(e.getEnchantment(), ts.getLevel());
+			this.inventory.setItem(ts.isTransfer() ? col2 : col1, is);
+
+			if (ts.isTransfer()) {
+				if (col2 >= 9) col2 = 5;
+				++col2;
+			} else {
+				if (col1 >= 4) col1 = 0;
+				++col1;
+			}
+		}
+
+		for (int x = 0; x < 9; ++x) {
+			ItemBuilder filler = ItemBuilder.init().use(this.getFiller());
+
+			filler.setPlaceholders(new HashMap<String, String>() {{
+				put("cost", "\\$ 69.99");
+			}});
+
+			if (x > 4) {
+				filler.setDurability((short) 5);
+				filler.setName("&a&lTRANSFER ENCHANTMENTS");
+				filler.setLore(new ArrayList<String>() {{
+					add("&eClick this to confirm this enchantment transfer.");
+					add("&eYou will be charged &f%cost%");
+				}});
+			} else if (x < 4) {
+				filler.setDurability((short) 14);
+				filler.setName("&c&lCANCEL TRANSFER");
+				filler.setLore(new ArrayList<String>() {{
+					add("&cClick this to cancel the enchantment transfer.");
+					add("&cYou will not be charged, and all your enchantments will remain.");
+				}});
+			}
+
+			this.getInventory().setItem(this.getInventory().getSize() - 9 + x, filler.getItemStack());
+		}
 	}
 
 	@Override
