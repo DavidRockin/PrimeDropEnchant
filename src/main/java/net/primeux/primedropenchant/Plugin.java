@@ -59,5 +59,6 @@ public class Plugin extends JavaPlugin
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
 
 }
