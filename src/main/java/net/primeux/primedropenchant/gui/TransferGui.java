@@ -131,7 +131,7 @@ public class TransferGui extends BaseGui
 			this.getPlayer().sendMessage("No enchantments to transfer");
 			return false;
 		}
-		ItemStack book = getPlugin().getEnchantmentHandler().swap(getSource(), getPlayer(), enchants);
+		ItemStack book = getPlugin().getEnchantmentHandler().swap(getSource(), getPlayer(), toTransfer);
 		if (null == book) {
 			getPlayer().sendMessage("You cannot afford this");
 			return false;
