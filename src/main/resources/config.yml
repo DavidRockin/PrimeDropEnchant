@@ -1,0 +1,224 @@
+# PrimeDropEnchant
+
+# the item to contain all transferred enchantments
+enchantmentContainer:
+  type: ENCHANTED_BOOK
+  name: '&b%player%'' book of Enchanting'
+  lore:
+  - '&bTransferred enchantments!'
+
+# Configure which enchantments are allowed to be transferred
+# and their price to transfer. For currency, you can use `money` or `experience`
+enchantments:
+- id: ARROW_DAMAGE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: ARROW_FIRE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: ARROW_INFINITE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: ARROW_KNOCKBACK
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: BINDING_CURSE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: CHANNELING
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: DAMAGE_ALL
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: DAMAGE_ARTHROPODS
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: DAMAGE_UNDEAD
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: DEPTH_STRIDER
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: DIG_SPEED
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: DURABILITY
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: FIRE_ASPECT
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: FROST_WALKER
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: IMPALING
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: KNOCKBACK
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: LOOT_BONUS_BLOCKS
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: LOOT_BONUS_MOBS
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: LOYALTY
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: LUCK
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: LURE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: MENDING
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: MULTISHOT
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: OXYGEN
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: PIERCING
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: PROTECTION_ENVIRONMENTAL
+  allow: true
+  cost: PROTECTION_EXPLOSIONS
+    amount: 10
+    perLevel: true
+    currency: money
+- id: PROTECTION_FALL
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: PROTECTION_FIRE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: PROTECTION_PROJECTILE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: QUICK_CHARGE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: RIPTIDE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: SILK_TOUCH
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: SWEEPING_EDGE
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: THORNS
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
+- id: VANISHING_CURSE
+  allow: false
+- id: WATER_WORKER
+  allow: true
+  cost:
+    amount: 10
+    perLevel: true
+    currency: money
