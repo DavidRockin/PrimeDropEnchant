@@ -20,3 +20,6 @@ gui:
     lore:
     - '&cCancels this transfer. You will not be charged.'
     - '&cYour enchantments will remain untouched.'
+  cannotAfford:
+  - ''
+  - '&cYou cannot afford this transfer!'

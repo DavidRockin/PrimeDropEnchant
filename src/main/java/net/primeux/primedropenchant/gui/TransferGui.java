@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransferGui extends BaseGui
 {
@@ -117,17 +118,23 @@ public class TransferGui extends BaseGui
 			}
 		}
 
+		Transaction t = this.createTransaction();
+
 		for (int x = 0; x < 9; ++x) {
 			ItemBuilder filler = ItemBuilder.init().use(this.getFiller());
 
 			filler.setPlaceholders(new HashMap<String, String>() {{
-				put("cost", "\\$ 69.99");
+				put("cost", t.formatCost());
 			}});
 
 			if (x > 4) {
 				filler.setDurability((short) 5);
 				filler.setName(getPlugin().getLocale().getLocale("gui.transfer.name"));
 				filler.setLore(getPlugin().getLocale().getLocaleList("gui.transfer.lore"));
+
+				if (!t.canAfford) {
+					filler.appendLore(getPlugin().getLocale().getLocaleList("gui.cannotAfford"));
+				}
 			} else if (x < 4) {
 				filler.setDurability((short) 14);
 				filler.setName(getPlugin().getLocale().getLocale("gui.cancel.name"));
@@ -136,6 +143,24 @@ public class TransferGui extends BaseGui
 
 			this.getInventory().setItem(this.getInventory().getSize() - 9 + x, filler.getItemStack());
 		}
+	}
+
+	private Transaction createTransaction()
+	{
+		Map<Enchant, Integer> success = new HashMap<>();
+
+		// build our available enchantments
+		this.getEnchantmentIndex().forEach((integer, transferState) -> {
+			if (transferState.isTransfer()) {
+				success.put(transferState.getEnchant(), transferState.getLevel());
+			}
+		});
+
+		if (success.isEmpty()) {
+			return null;
+		}
+
+		return Transaction.begin(success, this.getPlayer());
 	}
 
 	@Override
