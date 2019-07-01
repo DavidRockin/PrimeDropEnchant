@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -70,6 +71,31 @@ public class EnchantmentHandler
 	}
 
 	/**
+	 * Swaps all applicable enchantments on a player's itemstack
+	 * Returns null if unable to afford any enchantment swap, otherwise
+	 * itemstack of the transferred enchantments
+	 *
+	 * @param itemStack
+	 * @param player
+	 * @param enchantments
+	 * @return
+	 */
+	public ItemStack swap(ItemStack itemStack, Player player, List<Enchant> enchantments)
+	{
+		List<Enchant> success = new ArrayList();
+
+		for (Enchant e : enchantments) {
+			if (e.canSell() && e.getPayment().playerCanAfford(player, e, itemStack)) {
+				e.getPayment().chargePlayer(player, e, itemStack);
+				e.removeEnchantment(itemStack);
+				success.add(e);
+			}
+		}
+
+		return this.createBook(player, itemStack, success);
+	}
+
+	/**
 	 * Creates an enchantment book
 	 * @param player
 	 * @param original
@@ -78,6 +104,10 @@ public class EnchantmentHandler
 	 */
 	public ItemStack createBook(Player player, ItemStack original, List<Enchant> enchantments)
 	{
+		if (enchantments == null || enchantments.size() == 0) {
+			return null;
+		}
+
 		ItemBuilder ib = ItemBuilder.init().deserialize(this.getPlugin().getEnchantmentContainers());
 		ib.setPlaceholders(new HashMap<String, String>() {{
 			put("player", player.getName());
