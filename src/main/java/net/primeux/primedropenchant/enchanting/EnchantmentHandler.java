@@ -96,6 +96,8 @@ public class EnchantmentHandler
 			return null;
 		}
 
+		t.charge();
+
 		// build the book
 		final ItemStack book  = this.createBook(player, itemStack, success.keySet());
 		t.setItemStack(book);
