@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.enchanting.Enchant;
+import net.primeux.primedropenchant.payment.Transaction;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -184,13 +185,13 @@ public class TransferGui extends BaseGui
 			this.getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.source.no-enchants"));
 			return false;
 		}
-		ItemStack book = getPlugin().getEnchantmentHandler().swap(getSource(), getPlayer(), toTransfer);
-		if (null == book) {
+		Transaction book = getPlugin().getEnchantmentHandler().swap(getSource(), getPlayer(), toTransfer);
+		if (null == book || book.getItemStack() == null) {
 			getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.source.unaffordable"));
 			return false;
 		}
 
-		getPlayer().getInventory().addItem(book);
+		getPlayer().getInventory().addItem(book.getItemStack());
 		getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.success"));
 		return true;
 	}

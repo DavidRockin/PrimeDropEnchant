@@ -2,14 +2,13 @@ package net.primeux.primedropenchant.enchanting;
 
 import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
+import net.primeux.primedropenchant.payment.Transaction;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Enchantment Handler literally fucking handles all available
@@ -79,24 +78,34 @@ public class EnchantmentHandler
 	 * @param enchantments
 	 * @return
 	 */
-	public ItemStack swap(ItemStack itemStack, Player player, List<Enchant> enchantments)
+	public Transaction swap(ItemStack itemStack, Player player, List<Enchant> enchantments)
 	{
-		List<Enchant> success = new ArrayList();
+		Map<Enchant, Integer> success = new HashMap<>();
 
-		for (Enchant e : enchantments) {
-			if (e.canSell() && e.getPayment().playerCanAfford(player, e, itemStack)) {
-				e.getPayment().chargePlayer(player, e, itemStack);
-				success.add(e);
-			}
+		// build our available enchantments
+		enchantments.forEach(e -> {
+			if (e.canSell()) success.put(e, e.getItemStackLevel(itemStack));
+		});
+
+		if (success.isEmpty()) {
+			return null;
 		}
 
-		final ItemStack book  = this.createBook(player, itemStack, success);
+		Transaction t = new Transaction(success, player);
+		if (!t.canAfford) {
+			return null;
+		}
 
-		for (Enchant e : success) {
+		// build the book
+		final ItemStack book  = this.createBook(player, itemStack, success.keySet());
+		t.setItemStack(book);
+
+		// removes all enchantments from our itemstack
+		for (Enchant e : success.keySet()) {
 			e.removeEnchantment(itemStack);
 		}
 
-		return book;
+		return t;
 	}
 
 	/**
@@ -106,7 +115,7 @@ public class EnchantmentHandler
 	 * @param enchantments
 	 * @return
 	 */
-	public ItemStack createBook(Player player, ItemStack original, List<Enchant> enchantments)
+	public ItemStack createBook(Player player, ItemStack original, Collection<Enchant> enchantments)
 	{
 		if (enchantments == null || enchantments.size() == 0) {
 			return null;
