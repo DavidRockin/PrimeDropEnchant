@@ -16,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TransferGui extends BaseGui
 {
@@ -85,19 +84,20 @@ public class TransferGui extends BaseGui
 		int col1 = 0, col2 = 5;
 
 		for (TransferState ts : this.enchantmentIndex.values()) {
+			ts.setStot(ts.isTransfer() ? col2 : col1);
 			Enchant e = ts.getEnchant();
 
 			is = ItemBuilder.init().use(new ItemStack(Material.ENCHANTED_BOOK))
 					.setName(e.getEnchantment().getName())
 					.getItemStack();
 			is.addUnsafeEnchantment(e.getEnchantment(), ts.getLevel());
-			this.inventory.setItem(ts.isTransfer() ? col2 : col1, is);
+			this.inventory.setItem(ts.getStot(), is);
 
 			if (ts.isTransfer()) {
-				if (col2 >= 9) col2 = 5;
+				if (col2 >= 9) col2 += 3;
 				++col2;
 			} else {
-				if (col1 >= 4) col1 = 0;
+				if (col1 >= 4) col1 += 3;
 				++col1;
 			}
 		}
@@ -132,25 +132,29 @@ public class TransferGui extends BaseGui
 	@Override
 	public void click(InventoryClickEvent event)
 	{
+		final ItemStack clicked = event.getCurrentItem();
 		event.setResult(Event.Result.DENY);
 		event.setCancelled(true);
 
-		if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR) ||
+		if (clicked == null || clicked.getType().equals(Material.AIR) ||
 				!event.getClickedInventory().equals(this.getInventory())) {
 			return;
 		}
 
 		// test for enchantment index
-		if (this.enchantmentIndex.containsKey(event.getSlot())) {
-			final TransferState ts = this.enchantmentIndex.get(event.getSlot());
-			if (ts == null) {
+		final TransferState ts = this.getTransferState(event.getSlot());
+		if (ts != null) {
+			ts.setTransfer(! ts.isTransfer());
+		} else if (clicked.getType().equals(this.getFiller().getType())) {
+			if (clicked.getDurability() == (short) 5 && this.transfer()) {
+				this.getPlayer().closeInventory();
+				return;
+			} else if (clicked.getDurability() == (short) 14) {
+				// todo give back item
+				this.getPlayer().sendMessage("You cancelled the trade");
+				this.getPlayer().closeInventory();
 				return;
 			}
-
-			ts.setTransfer(! ts.isTransfer());
-		} else if (event.getCurrentItem().getType().equals(Material.GREEN_RECORD) && this.transfer()) {
-			this.getPlayer().closeInventory();
-			return;
 		}
 
 		this.render();
@@ -182,6 +186,14 @@ public class TransferGui extends BaseGui
 		return true;
 	}
 
+	private TransferState getTransferState(int slot)
+	{
+		for (TransferState ts : getEnchantmentIndex().values()) {
+			if (ts.getStot() == slot) return ts;
+		}
+		return null;
+	}
+
 	protected class TransferState
 	{
 		@Getter
@@ -194,6 +206,10 @@ public class TransferGui extends BaseGui
 		@Getter
 		@Setter
 		private int level = 0;
+
+		@Getter
+		@Setter
+		private int stot = 0;
 
 		public TransferState(Enchant enchant,  boolean transfer, int level)
 		{
