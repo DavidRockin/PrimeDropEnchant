@@ -1,0 +1,6 @@
+main: net.primeux.primedropenchant
+name: PrimeDropEnchant
+version: 1.0.0
+author: PrimeUX
+website: https://primeux.net
+depend: [Vault]
