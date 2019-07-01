@@ -4,7 +4,6 @@ import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

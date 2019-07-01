@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
 import net.primeux.primedropenchant.enchanting.EnchantmentHandler;
+import net.primeux.primedropenchant.events.PlayerListener;
 import net.primeux.primedropenchant.payment.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,6 +40,7 @@ public class Plugin extends JavaPlugin
 	public void onEnable()
 	{
 		this.setup();
+		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 	}
 
 	@Override
