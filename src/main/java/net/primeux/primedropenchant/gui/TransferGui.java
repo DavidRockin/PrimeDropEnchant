@@ -81,10 +81,10 @@ public class TransferGui extends BaseGui
 			this.getInventory().setItem(y, this.getFiller());
 		}
 
-		int col1 = 0, col2 = 5;
+		int col1 = 0, col2 = 5, row1 = 0, row2 = 0;
 
 		for (TransferState ts : this.enchantmentIndex.values()) {
-			ts.setStot(ts.isTransfer() ? col2 : col1);
+			ts.setStot(ts.isTransfer() ? col2 + row2 : col1 + row1);
 			Enchant e = ts.getEnchant();
 
 			is = ItemBuilder.init().use(new ItemStack(Material.ENCHANTED_BOOK))
@@ -94,11 +94,15 @@ public class TransferGui extends BaseGui
 			this.inventory.setItem(ts.getStot(), is);
 
 			if (ts.isTransfer()) {
-				if (col2 >= 9) col2 += 3;
-				++col2;
+				if (col2 >= 8) {
+					col2 = 5;
+					row2 += 9;
+				} else ++col2;
 			} else {
-				if (col1 >= 4) col1 += 3;
-				++col1;
+				if (col1 >= 3) {
+					col1 = 0;
+					row1 += 9;
+				} else ++col1;
 			}
 		}
 
