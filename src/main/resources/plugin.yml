@@ -1,4 +1,4 @@
-main: net.primeux.primedropenchant
+main: net.primeux.primedropenchant.Plugin
 name: PrimeDropEnchant
 version: 1.0.0
 author: PrimeUX
