@@ -19,18 +19,16 @@ public interface iPayment
 	/**
 	 * Determines if the player can afford to transfer this particular enchantment
 	 * @param player
-	 * @param enchant
-	 * @param itemStack
+	 * @param amount
 	 * @return
 	 */
-	boolean playerCanAfford(Player player, Enchant enchant, ItemStack itemStack);
+	boolean playerCanAfford(Player player, float amount);
 
 	/**
 	 * Charges the player to transfer
 	 * @param player
-	 * @param enchant
-	 * @param itemStack
+	 * @param amount
 	 */
-	void chargePlayer(Player player, Enchant enchant, ItemStack itemStack);
+	void chargePlayer(Player player, float amount);
 
 }

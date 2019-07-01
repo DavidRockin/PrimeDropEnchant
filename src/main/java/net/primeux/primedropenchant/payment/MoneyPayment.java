@@ -2,9 +2,7 @@ package net.primeux.primedropenchant.payment;
 
 import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
-import net.primeux.primedropenchant.enchanting.Enchant;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Vault Economy Payment Processors
@@ -23,14 +21,14 @@ public class MoneyPayment implements iPayment
 		this.plugin = plugin;
 	}
 
-	public boolean playerCanAfford(Player player, Enchant enchant, ItemStack itemStack)
+	public boolean playerCanAfford(Player player, float amount)
 	{
-		return this.getPlugin().getEconomy().has(player, enchant.getPrice(itemStack));
+		return this.getPlugin().getEconomy().has(player, amount);
 	}
 
-	public void chargePlayer(Player player, Enchant enchant, ItemStack itemStack)
+	public void chargePlayer(Player player, float amount)
 	{
-		this.getPlugin().getEconomy().withdrawPlayer(player, enchant.getPrice(itemStack));
+		this.getPlugin().getEconomy().withdrawPlayer(player, amount);
 	}
 
 }

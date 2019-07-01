@@ -2,9 +2,7 @@ package net.primeux.primedropenchant.payment;
 
 import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
-import net.primeux.primedropenchant.enchanting.Enchant;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Experience Payment Processor
@@ -23,14 +21,14 @@ public class ExperiencePayment implements iPayment
 		this.plugin = plugin;
 	}
 
-	public boolean playerCanAfford(Player player, Enchant enchant, ItemStack itemStack)
+	public boolean playerCanAfford(Player player, float amount)
 	{
-		return player.getTotalExperience() >= enchant.getPrice(itemStack);
+		return player.getTotalExperience() >= amount;
 	}
 
-	public void chargePlayer(Player player, Enchant enchant, ItemStack itemStack)
+	public void chargePlayer(Player player, float amount)
 	{
-		player.setTotalExperience(player.getTotalExperience() - Math.round(enchant.getPrice(itemStack)));
+		player.giveExp(- Math.round(amount));
 	}
 
 }

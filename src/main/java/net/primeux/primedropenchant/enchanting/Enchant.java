@@ -91,12 +91,12 @@ public class Enchant
 
 	/**
 	 * Calculate the cost of this enchantment to transfer
-	 * @param itemStack
+	 * @param level
 	 * @return
 	 */
-	public float getPrice(ItemStack itemStack)
+	public float getPrice(int level)
 	{
-		return this.isConstantPrice() ? this.getCost() : this.getItemStackLevel(itemStack) * this.getCost();
+		return this.isConstantPrice() ? this.getCost() : level * this.getCost();
 	}
 
 	/**
