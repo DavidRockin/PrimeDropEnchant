@@ -51,9 +51,17 @@ public class PlayerListener implements Listener
 			return;
 		}
 
-		event.setCursor(book);
+		hand.setAmount(hand.getAmount() - 1);
+		if (hand.getAmount() < 1) {
+			hand.setType(Material.AIR);
+		}
+
+		event.setCursor(hand);
 		event.setCancelled(true);
 		event.setResult(Event.Result.DENY);
+
+		p.getInventory().addItem(book);
+
 		p.sendMessage("You pulled enchantments!");
 	}
 

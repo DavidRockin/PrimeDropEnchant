@@ -59,7 +59,7 @@ public class EnchantmentHandler
 		if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
 			return new ArrayList<Enchant>();
 		}
-		List<Enchant> results = new ArrayList<Enchant>();
+		List<Enchant> results = new ArrayList<>();
 		for (Enchant e : this.enchantments) {
 			if (canSell && !e.canSell()) continue;
 			if (e.itemIsEnchanted(itemStack)) {
@@ -86,12 +86,17 @@ public class EnchantmentHandler
 		for (Enchant e : enchantments) {
 			if (e.canSell() && e.getPayment().playerCanAfford(player, e, itemStack)) {
 				e.getPayment().chargePlayer(player, e, itemStack);
-				e.removeEnchantment(itemStack);
 				success.add(e);
 			}
 		}
 
-		return this.createBook(player, itemStack, success);
+		final ItemStack book  = this.createBook(player, itemStack, success);
+
+		for (Enchant e : success) {
+			e.removeEnchantment(itemStack);
+		}
+
+		return book;
 	}
 
 	/**
@@ -107,12 +112,12 @@ public class EnchantmentHandler
 			return null;
 		}
 
-		ItemBuilder ib = ItemBuilder.init().deserialize(this.getPlugin().getEnchantmentContainers());
+		ItemBuilder ib = ItemBuilder.init();
 		ib.setPlaceholders(new HashMap<String, String>() {{
 			put("player", player.getName());
 		}});
 
-		ItemStack book = ib.getItemStack();
+		ItemStack book = ib.deserialize(this.getPlugin().getEnchantmentContainers()).getItemStack();
 		enchantments.forEach(e -> e.enchantItemstack(book, e.getItemStackLevel(original)));
 		return book;
 	}

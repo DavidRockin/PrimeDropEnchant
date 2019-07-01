@@ -3,7 +3,7 @@
 # the item to contain all transferred enchantments
 enchantmentContainer:
   type: ENCHANTED_BOOK
-  name: '&b%player%'' book of Enchanting'
+  name: '&b%player%''s book of Enchanting'
   lore:
   - '&bTransferred enchantments!'
 
@@ -162,7 +162,7 @@ enchantments:
     currency: money
 - id: PROTECTION_ENVIRONMENTAL
   allow: true
-  cost: PROTECTION_EXPLOSIONS
+  cost:
     amount: 10
     perLevel: true
     currency: money
