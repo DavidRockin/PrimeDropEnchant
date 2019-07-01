@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
 import net.primeux.primedropenchant.enchanting.EnchantmentHandler;
 import net.primeux.primedropenchant.events.PlayerListener;
+import net.primeux.primedropenchant.gui.GuiHandler;
 import net.primeux.primedropenchant.payment.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,6 +34,10 @@ public class Plugin extends JavaPlugin
 	private Map<String, Object> enchantmentContainers;
 
 	@Getter
+	@Setter
+	public boolean allowGuiTransfer = true;
+
+	@Getter
 	private FileConfiguration config;
 
 	@Override
@@ -47,6 +52,7 @@ public class Plugin extends JavaPlugin
 	{
 		this.setup();
 		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
+		this.getServer().getPluginManager().registerEvents(new GuiHandler(), this);
 	}
 
 	@Override
