@@ -47,12 +47,6 @@ public class PlayerListener implements Listener
 			return;
 		}
 
-		/*ItemStack book = getPlugin().getEnchantmentHandler().swap(is, p, enchants);
-		if (null == book) {
-			p.sendMessage("You cannot afford this");
-			return;
-		}*/
-
 		hand.setAmount(hand.getAmount() - 1);
 		if (hand.getAmount() < 1) {
 			hand.setType(Material.AIR);
@@ -67,10 +61,6 @@ public class PlayerListener implements Listener
 		event.setResult(Event.Result.DENY);
 
 		GuiHandler.open(p, new TransferGui(plugin, is));
-
-		//p.getInventory().addItem(book);
-
-		//p.sendMessage("You pulled enchantments!");
 	}
 
 }
