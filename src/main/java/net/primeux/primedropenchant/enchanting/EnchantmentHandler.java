@@ -56,4 +56,12 @@ public class EnchantmentHandler
 		return results;
 	}
 
+	/**
+	 * Clears all enchantments
+	 */
+	public void clear()
+	{
+		this.enchantments.clear();
+	}
+
 }

@@ -18,6 +18,8 @@ public class Plugin extends JavaPlugin
 	@Getter
 	private PaymentHandler paymentHandler = new PaymentHandler();
 
+	private ConfigParser configParser = new ConfigParser(this);
+
 	@Override
 	public void onLoad()
 	{
@@ -28,12 +30,18 @@ public class Plugin extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		this.enchantmentHandler = new EnchantmentHandler();
+		this.setup();
 	}
 
 	@Override
 	public void onDisable()
 	{
+	}
+
+	public void setup()
+	{
+		this.enchantmentHandler = new EnchantmentHandler();
+		this.configParser.load();
 	}
 
 }
