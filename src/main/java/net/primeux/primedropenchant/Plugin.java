@@ -6,9 +6,12 @@ import net.milkbowl.vault.economy.Economy;
 import net.primeux.primedropenchant.enchanting.EnchantmentHandler;
 import net.primeux.primedropenchant.events.PlayerListener;
 import net.primeux.primedropenchant.payment.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Map;
 
 public class Plugin extends JavaPlugin
@@ -28,6 +31,9 @@ public class Plugin extends JavaPlugin
 	@Getter
 	@Setter
 	private Map<String, Object> enchantmentContainers;
+
+	@Getter
+	private FileConfiguration config;
 
 	@Override
 	public void onLoad()
@@ -51,6 +57,14 @@ public class Plugin extends JavaPlugin
 	public void setup()
 	{
 		this.hooks();
+
+		File c = new File(this.getDataFolder(), "/config.yml");
+		if (!c.exists()) {
+			this.saveResource("config.yml", false);
+		}
+
+		this.config = YamlConfiguration.loadConfiguration(c);
+
 		this.enchantmentHandler = new EnchantmentHandler(this);
 		this.configParser.load();
 	}
