@@ -1,5 +1,8 @@
 # PrimeDropEnchant
 
+# the language to use
+locale: en
+
 # the item to contain all transferred enchantments
 enchantmentContainer:
   type: ENCHANTED_BOOK

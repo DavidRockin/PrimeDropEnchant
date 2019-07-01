@@ -41,7 +41,7 @@ public class TransferGui extends BaseGui
 		this.inventory = Bukkit.createInventory(
 			owner,
 			9 * 5,
-			ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "     KEEP     " + ChatColor.DARK_GRAY + "|" + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "   TRANSFER"
+			getPlugin().getLocale().getLocale("gui.title")
 		);
 		this.render();
 	}
@@ -54,7 +54,7 @@ public class TransferGui extends BaseGui
 		}
 		this.enchants = this.getPlugin().getEnchantmentHandler().getItemEnchantments(this.source, true);
 		if (this.enchants.size() == 0) {
-			player.sendMessage("This item has no enchantments");
+			player.sendMessage(getPlugin().getLocale().getLocale("enchanting.source.no-enchants"));
 			return;
 		}
 
@@ -115,18 +115,12 @@ public class TransferGui extends BaseGui
 
 			if (x > 4) {
 				filler.setDurability((short) 5);
-				filler.setName("&a&lTRANSFER ENCHANTMENTS");
-				filler.setLore(new ArrayList<String>() {{
-					add("&eClick this to confirm this enchantment transfer.");
-					add("&eYou will be charged &f%cost%");
-				}});
+				filler.setName(getPlugin().getLocale().getLocale("gui.transfer.name"));
+				filler.setLore(getPlugin().getLocale().getLocaleList("gui.transfer.lore"));
 			} else if (x < 4) {
 				filler.setDurability((short) 14);
-				filler.setName("&c&lCANCEL TRANSFER");
-				filler.setLore(new ArrayList<String>() {{
-					add("&cClick this to cancel the enchantment transfer.");
-					add("&cYou will not be charged, and all your enchantments will remain.");
-				}});
+				filler.setName(getPlugin().getLocale().getLocale("gui.cancel.name"));
+				filler.setLore(getPlugin().getLocale().getLocaleList("gui.cancel.lore"));
 			}
 
 			this.getInventory().setItem(this.getInventory().getSize() - 9 + x, filler.getItemStack());
@@ -155,7 +149,7 @@ public class TransferGui extends BaseGui
 				return;
 			} else if (clicked.getDurability() == (short) 14) {
 				// todo give back item
-				this.getPlayer().sendMessage("You cancelled the trade");
+				this.getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.cancel"));
 				this.getPlayer().closeInventory();
 				return;
 			}
@@ -176,17 +170,17 @@ public class TransferGui extends BaseGui
 		}
 
 		if (toTransfer.size() == 0) {
-			this.getPlayer().sendMessage("No enchantments to transfer");
+			this.getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.source.no-enchants"));
 			return false;
 		}
 		ItemStack book = getPlugin().getEnchantmentHandler().swap(getSource(), getPlayer(), toTransfer);
 		if (null == book) {
-			getPlayer().sendMessage("You cannot afford this");
+			getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.source.unaffordable"));
 			return false;
 		}
 
 		getPlayer().getInventory().addItem(book);
-		getPlayer().sendMessage("hereee");
+		getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.success"));
 		return true;
 	}
 

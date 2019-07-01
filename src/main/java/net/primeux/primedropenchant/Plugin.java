@@ -7,12 +7,13 @@ import net.primeux.primedropenchant.enchanting.EnchantmentHandler;
 import net.primeux.primedropenchant.events.PlayerListener;
 import net.primeux.primedropenchant.gui.GuiHandler;
 import net.primeux.primedropenchant.payment.*;
+import net.primeux.primedropenchant.storage.configuration.Config;
+import net.primeux.primedropenchant.storage.configuration.ConfigHandler;
+import net.primeux.primedropenchant.storage.configuration.ConfigType;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.Map;
 
 public class Plugin extends JavaPlugin
@@ -38,7 +39,7 @@ public class Plugin extends JavaPlugin
 	public boolean allowGuiTransfer = true;
 
 	@Getter
-	private FileConfiguration config;
+	private ConfigHandler configHandler;
 
 	@Override
 	public void onLoad()
@@ -60,16 +61,27 @@ public class Plugin extends JavaPlugin
 	{
 	}
 
+	@Override
+	public FileConfiguration getConfig()
+	{
+		return this.getConfigHandler().getConfig("config");
+	}
+
+	public Config getLocale()
+	{
+		return this.getConfigHandler().getConfigByName("locale");
+	}
+
 	public void setup()
 	{
 		this.hooks();
 
-		File c = new File(this.getDataFolder(), "/config.yml");
-		if (!c.exists()) {
-			this.saveResource("config.yml", false);
-		}
+		this.configHandler = new ConfigHandler(this);
+		this.configHandler.loadConfig("config", "config.yml", ConfigType.SETTINGS);
+		this.configHandler.loadConfigs();
 
-		this.config = YamlConfiguration.loadConfiguration(c);
+		this.configHandler.loadConfig("locale", "locale/" + this.getConfig().getString("locale") + ".yml", ConfigType.RESOURCE);
+		this.configHandler.getConfigByName("locale").load();
 
 		this.enchantmentHandler = new EnchantmentHandler(this);
 		this.configParser.load();

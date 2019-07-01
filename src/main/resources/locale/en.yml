@@ -1,0 +1,22 @@
+# PrimeDropEnchant :: English Localization File
+
+enchanting:
+  transfer:
+    cancel: '&cYou cancelled the transfer.'
+    success: '&bYou successfully transferred your enchantments and have been charged &f%cost%'
+  source:
+    no-enchants: '&cThis item does not have any enchantments.'
+    unaffordable: '&cYou cannot afford this transfer: &f%cost%'
+
+gui:
+  title: '&3&l     KEEP     &8|&3&l   TRANSFER'
+  transfer:
+    name: '&a&lTRANSFER ENCHANTMENTS'
+    lore:
+    - '&eTransfers all selected enchantments to your book.'
+    - '&eYou will be charged &f%cost%'
+  cancel:
+    name: '&c&lCANCEL TRANSFER'
+    lore:
+    - '&cCancels this transfer. You will not be charged.'
+    - '&cYour enchantments will remain untouched.'

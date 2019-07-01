@@ -41,7 +41,7 @@ public class PlayerListener implements Listener
 
 		List<Enchant> enchants = getPlugin().getEnchantmentHandler().getItemEnchantments(is, true);
 		if (enchants.size() == 0) {
-			p.sendMessage("This item doesn't have any enchants");
+			p.sendMessage(getPlugin().getLocale().getLocale("enchanting.source.no-enchants"));
 			event.setCancelled(true);
 			event.setResult(Event.Result.DENY);
 			return;
