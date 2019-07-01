@@ -58,12 +58,16 @@ public class PlayerListener implements Listener
 			hand.setType(Material.AIR);
 		}
 
-		event.setCursor(hand);
+		if (hand != null && !hand.getType().equals(Material.AIR)) {
+			p.getInventory().addItem(hand);
+		}
+
+		event.setCursor(new ItemStack(Material.AIR));
 		event.setCancelled(true);
 		event.setResult(Event.Result.DENY);
 
 		GuiHandler.open(p, new TransferGui(plugin, is));
-				
+
 		//p.getInventory().addItem(book);
 
 		//p.sendMessage("You pulled enchantments!");

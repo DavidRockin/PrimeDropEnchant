@@ -66,6 +66,7 @@ public class TransferGui extends BaseGui
 				false,
 				e.getItemStackLevel(this.getSource())
 			));
+			++i;
 		}
 
 		super.open(player);
@@ -78,7 +79,9 @@ public class TransferGui extends BaseGui
 		for (Map.Entry<Integer, TransferState> ts : this.enchantmentIndex.entrySet()) {
 			Enchant e = ts.getValue().getEnchant();
 
-			is = ItemBuilder.init().setType(Material.ENCHANTED_BOOK).setName(e.getEnchantment().getName()).getItemStack();
+			is = ItemBuilder.init().use(new ItemStack(
+					ts.getValue().isTransfer() ? Material.ENCHANTED_BOOK : Material.BOOK
+			)).setName(e.getEnchantment().getName()).getItemStack();
 			is.addUnsafeEnchantment(e.getEnchantment(), ts.getValue().getLevel());
 			this.inventory.setItem(ts.getKey(), is);
 		}
