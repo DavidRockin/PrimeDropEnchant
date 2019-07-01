@@ -34,7 +34,6 @@ public class Transaction
 		this.calculate();
 	}
 
-
 	/**
 	 * Begins a transaction
 	 * @param enchantments
@@ -78,6 +77,19 @@ public class Transaction
 		for (Map.Entry<iPayment, Float> p : this.getAmounts().entrySet()) {
 			p.getKey().chargePlayer(this.getPlayer(), p.getValue());
 		}
+	}
+
+	/**
+	 * Formats all payments to a pretty string
+	 * @return
+	 */
+	public String formatCost()
+	{
+		String cost = "";
+		for (Map.Entry<iPayment, Float> p : this.getAmounts().entrySet()) {
+			cost += p.getKey().formatAmount(p.getValue()) + " ";
+		}
+		return cost;
 	}
 
 	/**

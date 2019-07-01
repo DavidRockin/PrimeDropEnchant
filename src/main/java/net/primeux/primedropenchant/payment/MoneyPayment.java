@@ -21,6 +21,12 @@ public class MoneyPayment implements iPayment
 		this.plugin = plugin;
 	}
 
+	@Override
+	public String formatAmount(float amount)
+	{
+		return String.format("$ %,.2f", amount);
+	}
+
 	public boolean playerCanAfford(Player player, float amount)
 	{
 		return this.getPlugin().getEconomy().has(player, amount);

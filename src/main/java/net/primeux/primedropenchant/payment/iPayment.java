@@ -1,8 +1,6 @@
 package net.primeux.primedropenchant.payment;
 
-import net.primeux.primedropenchant.enchanting.Enchant;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Payment Processor Interface
@@ -15,6 +13,13 @@ public interface iPayment
 	 * @return
 	 */
 	String getId();
+
+	/**
+	 * Formats a given cost to a user friendly label
+	 * @param amount
+	 * @return
+	 */
+	String formatAmount(float amount);
 
 	/**
 	 * Determines if the player can afford to transfer this particular enchantment

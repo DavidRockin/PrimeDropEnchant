@@ -21,6 +21,12 @@ public class ExperiencePayment implements iPayment
 		this.plugin = plugin;
 	}
 
+	@Override
+	public String formatAmount(float amount)
+	{
+		return String.format("%,d XP", Math.round(amount));
+	}
+
 	public boolean playerCanAfford(Player player, float amount)
 	{
 		return player.getTotalExperience() >= amount;

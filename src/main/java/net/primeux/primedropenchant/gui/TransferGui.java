@@ -187,12 +187,28 @@ public class TransferGui extends BaseGui
 		}
 		Transaction book = getPlugin().getEnchantmentHandler().swap(getSource(), getPlayer(), toTransfer);
 		if (null == book || book.getItemStack() == null) {
-			getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.source.unaffordable"));
+			getPlayer().sendMessage(getPlugin().getLocale().getLocale(
+				"enchanting.source.unaffordable",
+				new String[] {
+					"cost"
+				},
+				new String[] {
+					book != null ? book.formatCost() : "N/A"
+				}
+			));
 			return false;
 		}
 
 		getPlayer().getInventory().addItem(book.getItemStack());
-		getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.success"));
+		getPlayer().sendMessage(getPlugin().getLocale().getLocale(
+			"enchanting.transfer.success", new String[] {
+				"cost"
+			},
+			new String[] {
+				book.formatCost()
+			}
+		));
+
 		return true;
 	}
 
