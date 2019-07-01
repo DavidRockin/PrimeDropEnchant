@@ -24,7 +24,7 @@ public class MoneyPayment implements iPayment
 	@Override
 	public String formatAmount(float amount)
 	{
-		return String.format("$ %,.2f", amount);
+		return String.format("\\$ %,.2f", amount);
 	}
 
 	public boolean playerCanAfford(Player player, float amount)

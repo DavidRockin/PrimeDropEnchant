@@ -124,7 +124,7 @@ public class TransferGui extends BaseGui
 			ItemBuilder filler = ItemBuilder.init().use(this.getFiller());
 
 			filler.setPlaceholders(new HashMap<String, String>() {{
-				put("cost", t.formatCost());
+				put("cost", t == null ? "No Enchantments" : t.formatCost());
 			}});
 
 			if (x > 4) {
@@ -132,7 +132,7 @@ public class TransferGui extends BaseGui
 				filler.setName(getPlugin().getLocale().getLocale("gui.transfer.name"));
 				filler.setLore(getPlugin().getLocale().getLocaleList("gui.transfer.lore"));
 
-				if (!t.canAfford) {
+				if (t != null && !t.canAfford) {
 					filler.appendLore(getPlugin().getLocale().getLocaleList("gui.cannotAfford"));
 				}
 			} else if (x < 4) {
