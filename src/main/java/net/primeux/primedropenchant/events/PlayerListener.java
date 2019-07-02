@@ -6,7 +6,6 @@ import net.primeux.primedropenchant.enchanting.Enchant;
 import net.primeux.primedropenchant.gui.GuiHandler;
 import net.primeux.primedropenchant.gui.TransferGui;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -16,7 +15,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.Map;
 
 public class PlayerListener implements Listener
 {
@@ -37,7 +35,9 @@ public class PlayerListener implements Listener
 		final Player p = (Player) event.getWhoClicked();
 
 		if (event.isCancelled() || !event.getClick().equals(ClickType.RIGHT) || is == null || is.getType().equals(Material.AIR) ||
-				hand == null || !hand.getType().equals(Material.BOOK)) {
+				hand == null || !hand.getType().equals(Material.BOOK) ||
+				!getPlugin().getConfig().getStringList("transferWhitelist").contains(is.getType().toString())
+		) {
 			return;
 		}
 
@@ -82,7 +82,9 @@ public class PlayerListener implements Listener
 		final Player p = (Player) event.getWhoClicked();
 
 		if (event.isCancelled() || !event.getClick().equals(ClickType.RIGHT) || is == null || is.getType().equals(Material.AIR) ||
-				hand == null || !hand.getType().equals(Material.ENCHANTED_BOOK)) {
+				hand == null || !hand.getType().equals(Material.ENCHANTED_BOOK) ||
+				!getPlugin().getConfig().getStringList("enchantWhitelist").contains(is.getType().toString())
+			) {
 			return;
 		}
 

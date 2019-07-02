@@ -1,7 +1,15 @@
 # PrimeDropEnchant
+#
+# Developed by PrimeUX, (c) 2019
+# For assistance please visit our website: https://primeux.net
+#
+# For item types: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+
+
 
 # the language to use
 locale: en
+
 
 # the item to contain all transferred enchantments
 enchantmentContainer:
@@ -10,8 +18,83 @@ enchantmentContainer:
   lore:
   - '&bTransferred enchantments!'
 
+
+# defines which items can be enchanted via books
+enchantWhitelist:
+- DIAMOND_AXE
+- DIAMOND_BOOTS
+- DIAMOND_CHESTPLATE
+- DIAMOND_HELMET
+- DIAMOND_HOE
+- DIAMOND_LEGGINGS
+- DIAMOND_PICKAXE
+- DIAMOND_SHOVEL
+- DIAMOND_SWORD
+- IRON_AXE
+- IRON_BOOTS
+- IRON_CHESTPLATE
+- IRON_HELMET
+- IRON_HOE
+- IRON_LEGGINGS
+- IRON_PICKAXE
+- IRON_SHOVEL
+- IRON_SWORD
+- GOLD_AXE
+- GOLD_BOOTS
+- GOLD_CHESTPLATE
+- GOLD_HELMET
+- GOLD_HOE
+- GOLD_LEGGINGS
+- GOLD_PICKAXE
+- GOLD_SHOVEL
+- GOLD_SWORD
+- BOW
+- CROSSBOW
+- SHEARS
+- FISHING_ROD
+
+
+# defines which items can have enchanments transferred from
+transferWhitelist:
+- DIAMOND_AXE
+- DIAMOND_BOOTS
+- DIAMOND_CHESTPLATE
+- DIAMOND_HELMET
+- DIAMOND_HOE
+- DIAMOND_LEGGINGS
+- DIAMOND_PICKAXE
+- DIAMOND_SHOVEL
+- DIAMOND_SWORD
+- IRON_AXE
+- IRON_BOOTS
+- IRON_CHESTPLATE
+- IRON_HELMET
+- IRON_HOE
+- IRON_LEGGINGS
+- IRON_PICKAXE
+- IRON_SHOVEL
+- IRON_SWORD
+- GOLD_AXE
+- GOLD_BOOTS
+- GOLD_CHESTPLATE
+- GOLD_HELMET
+- GOLD_HOE
+- GOLD_LEGGINGS
+- GOLD_PICKAXE
+- GOLD_SHOVEL
+- GOLD_SWORD
+- BOW
+- CROSSBOW
+- SHEARS
+- FISHING_ROD
+
+
 # Configure which enchantments are allowed to be transferred
 # and their price to transfer. For currency, you can use `money` or `experience`
+# for a list of enchantment ID seek the Bukkit API:
+#   https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html
+# Note: For modded servers (ie: Tekkit), you can use custom enchantments as long as they extend
+# the vanilla enchantment system.
 enchantments:
 - id: ARROW_DAMAGE
   allow: true
