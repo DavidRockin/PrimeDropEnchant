@@ -2,6 +2,7 @@ package net.primeux.primedropenchant.payment;
 
 import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
+import net.primeux.primedropenchant.util.Experience;
 import org.bukkit.entity.Player;
 
 /**
@@ -29,12 +30,12 @@ public class ExperiencePayment implements iPayment
 
 	public boolean playerCanAfford(Player player, float amount)
 	{
-		return player.getTotalExperience() >= amount;
+		return Experience.getExp(player) >= amount;
 	}
 
 	public void chargePlayer(Player player, float amount)
 	{
-		player.giveExp(- Math.round(amount));
+		Experience.changeExp(player, - Math.round(amount));
 	}
 
 }
