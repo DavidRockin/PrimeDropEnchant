@@ -6,7 +6,6 @@ import net.primeux.primedropenchant.ConfigParser;
 import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.enchanting.Enchant;
 import net.primeux.primedropenchant.payment.Transaction;
-import net.primeux.primedropenchant.storage.configuration.Config;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -28,6 +27,9 @@ public class TransferGui extends BaseGui
 	private ItemStack source;
 
 	@Getter
+	private ItemStack container;
+
+	@Getter
 	private List<Enchant> enchants;
 
 	@Getter
@@ -35,10 +37,11 @@ public class TransferGui extends BaseGui
 
 	private boolean successfulTransfer = false;
 
-	public TransferGui(Plugin plugin, ItemStack source)
+	public TransferGui(Plugin plugin, ItemStack source, ItemStack container)
 	{
 		super(plugin);
 		this.source = source;
+		this.container = container;
 	}
 
 	@Override
@@ -83,6 +86,10 @@ public class TransferGui extends BaseGui
 		super.close(player);
 		if (!this.successfulTransfer) {
 			this.getPlayer().sendMessage(getPlugin().getLocale().getLocale("enchanting.transfer.cancel"));
+
+			if (this.container != null && !this.container.getType().equals(Material.AIR)) {
+				this.getPlayer().getInventory().addItem(this.container);
+			}
 		}
 	}
 

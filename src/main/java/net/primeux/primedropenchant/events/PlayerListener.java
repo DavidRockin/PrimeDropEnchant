@@ -53,6 +53,10 @@ public class PlayerListener implements Listener
 		}
 
 		hand.setAmount(hand.getAmount() - 1);
+
+		final ItemStack container = new ItemStack(hand);
+		container.setAmount(1);
+
 		if (hand.getAmount() < 1) {
 			hand.setType(Material.AIR);
 		}
@@ -65,7 +69,7 @@ public class PlayerListener implements Listener
 		event.setCancelled(true);
 		event.setResult(Event.Result.DENY);
 
-		GuiHandler.open(p, new TransferGui(plugin, is));
+		GuiHandler.open(p, new TransferGui(plugin, is, container));
 	}
 
 }
