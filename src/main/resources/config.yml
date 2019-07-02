@@ -97,6 +97,8 @@ transferWhitelist:
 # economy balance (requires Vault). If its `experience` then it will take the
 # player's XP.
 #
+# You can make enchantments free by setting its `cost.amount` to -1
+#
 # The `id` field refers to the internal Bukkit enchantment API. Seek the resource below:
 #     https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html
 #

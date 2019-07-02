@@ -92,7 +92,7 @@ public class Enchant
 	 */
 	public boolean canSell()
 	{
-		return this.enchantment != null && this.isAllowed() && this.cost > 0;
+		return this.enchantment != null && this.isAllowed();
 	}
 
 	/**

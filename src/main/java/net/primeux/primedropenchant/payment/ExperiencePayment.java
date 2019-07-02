@@ -25,17 +25,17 @@ public class ExperiencePayment implements iPayment
 	@Override
 	public String formatAmount(float amount)
 	{
-		return String.format("%,d XP", Math.round(amount));
+		return amount > 0 ? String.format("%,d XP", Math.round(amount)) : "FREE";
 	}
 
 	public boolean playerCanAfford(Player player, float amount)
 	{
-		return Experience.getExp(player) >= amount;
+		return amount <= 0 || Experience.getExp(player) >= amount;
 	}
 
 	public void chargePlayer(Player player, float amount)
 	{
-		Experience.changeExp(player, - Math.round(amount));
+		if (amount > 0) Experience.changeExp(player, - Math.round(amount));
 	}
 
 }

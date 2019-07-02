@@ -87,7 +87,9 @@ public class Transaction
 	{
 		String cost = "";
 		for (Map.Entry<iPayment, Float> p : this.getAmounts().entrySet()) {
-			cost += p.getKey().formatAmount(p.getValue()) + " ";
+			if (p.getValue() > 0) {
+				cost += p.getKey().formatAmount(p.getValue()) + " ";
+			}
 		}
 		return cost;
 	}

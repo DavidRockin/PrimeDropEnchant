@@ -24,17 +24,17 @@ public class MoneyPayment implements iPayment
 	@Override
 	public String formatAmount(float amount)
 	{
-		return String.format("\\$ %,.2f", amount);
+		return amount > 0 ? String.format("\\$ %,.2f", amount) : "FREE";
 	}
 
 	public boolean playerCanAfford(Player player, float amount)
 	{
-		return this.getPlugin().getEconomy().has(player, amount);
+		return amount <= 0 || this.getPlugin().getEconomy().has(player, amount);
 	}
 
 	public void chargePlayer(Player player, float amount)
 	{
-		this.getPlugin().getEconomy().withdrawPlayer(player, amount);
+		if (amount > 0) this.getPlugin().getEconomy().withdrawPlayer(player, amount);
 	}
 
 }
