@@ -101,7 +101,14 @@ public class PlayerListener implements Listener
 		// merge our enchants
 		is.addUnsafeEnchantments(hand.getEnchantments());
 
-		event.setCursor(new ItemStack(Material.AIR));
+		hand.setAmount(hand.getAmount() - 1);
+
+		if (hand.getAmount() < 1) {
+			hand.setType(Material.AIR);
+			hand.setAmount(1);
+		}
+
+		event.setCursor(hand);
 		event.setCancelled(true);
 		event.setResult(Event.Result.DENY);
 
