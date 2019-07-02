@@ -3,6 +3,7 @@ package net.primeux.primedropenchant.enchanting;
 import lombok.Getter;
 import lombok.Setter;
 import net.primeux.primedropenchant.payment.iPayment;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -47,6 +48,11 @@ public class Enchant
 	@Getter
 	@Setter
 	private iPayment payment;
+
+	public String getName()
+	{
+		return StringUtils.capitalize(this.getEnchantment().getName().toLowerCase().replace('_', ' '));
+	}
 
 	/**
 	 * Determines if an itemstack has this enchantment

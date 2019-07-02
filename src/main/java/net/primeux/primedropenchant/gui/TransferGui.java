@@ -2,15 +2,18 @@ package net.primeux.primedropenchant.gui;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.primeux.primedropenchant.ConfigParser;
 import net.primeux.primedropenchant.Plugin;
 import net.primeux.primedropenchant.enchanting.Enchant;
 import net.primeux.primedropenchant.payment.Transaction;
+import net.primeux.primedropenchant.storage.configuration.Config;
 import net.primeux.primedropenchant.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -86,7 +89,6 @@ public class TransferGui extends BaseGui
 	@Override
 	protected void render()
 	{
-		ItemStack is;
 		this.getInventory().clear();
 
 		for (int y = 4; y < this.getInventory().getSize(); y += 9) {
@@ -97,13 +99,22 @@ public class TransferGui extends BaseGui
 
 		for (TransferState ts : this.enchantmentIndex.values()) {
 			ts.setStot(ts.isTransfer() ? col2 + row2 : col1 + row1);
-			Enchant e = ts.getEnchant();
+			final Enchant e = ts.getEnchant();
+			final int level = e.getItemStackLevel(getSource());
 
-			is = ItemBuilder.init().use(new ItemStack(Material.ENCHANTED_BOOK))
-					.setName(e.getEnchantment().getName())
-					.getItemStack();
-			is.addUnsafeEnchantment(e.getEnchantment(), ts.getLevel());
-			this.inventory.setItem(ts.getStot(), is);
+			ItemBuilder ib = new ItemBuilder();
+			ib.setPlaceholders(new HashMap<String, String>() {{
+				put("name", e.getName());
+				put("level", level + "");
+				put("cost", e.getPayment().formatAmount(e.getPrice(level)));
+			}});
+			ib.deserialize(ConfigParser.getConfigSectionValue(getPlugin().getLocale().getConfig().getConfigurationSection("gui.item"), true));
+			ib.addUnsafeEnchantment(e.getEnchantment(), ts.getLevel());
+			ib.addFlags(ItemFlag.HIDE_ENCHANTS);
+
+			ib.appendLore(getPlugin().getLocale().getLocaleList("gui.item." + (ts.isTransfer() ? "transfer" : "keep")));
+
+			this.inventory.setItem(ts.getStot(), ib.getItemStack());
 
 			if (ts.isTransfer()) {
 				if (col2 >= 8) {

@@ -23,3 +23,15 @@ gui:
   cannotAfford:
   - ''
   - '&cYou cannot afford this transfer!'
+  item:
+    type: ENCHANTED_BOOK
+    name: '&b&l%name% (%level%)'
+    lore:
+    - '&b%name%: &f level %level%'
+    - '&bTransfer Cost: &f%cost%'
+    keep:
+    - ''
+    - '&a [ Click to transfer this enchantment ]'
+    transfer:
+    - ''
+    - '&c [ Click to keep this enchantment ]'
