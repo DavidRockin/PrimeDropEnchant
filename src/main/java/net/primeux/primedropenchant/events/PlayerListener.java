@@ -6,6 +6,7 @@ import net.primeux.primedropenchant.enchanting.Enchant;
 import net.primeux.primedropenchant.gui.GuiHandler;
 import net.primeux.primedropenchant.gui.TransferGui;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.Map;
 
 public class PlayerListener implements Listener
 {
@@ -70,6 +72,37 @@ public class PlayerListener implements Listener
 		event.setResult(Event.Result.DENY);
 
 		GuiHandler.open(p, new TransferGui(plugin, is, container));
+	}
+
+	@EventHandler
+	public void applyEnchantigBook(InventoryClickEvent event)
+	{
+		final ItemStack is = event.getCurrentItem();
+		final ItemStack hand = event.getCursor();
+		final Player p = (Player) event.getWhoClicked();
+
+		if (event.isCancelled() || !event.getClick().equals(ClickType.RIGHT) || is == null || is.getType().equals(Material.AIR) ||
+				hand == null || !hand.getType().equals(Material.ENCHANTED_BOOK)) {
+			return;
+		}
+
+		if (!p.hasPermission("primedropenchant.bookenchant") && !p.isOp()) {
+			p.sendMessage(getPlugin().getLocale().getLocale("noPermission"));
+			return;
+		}
+
+		if (hand.getEnchantments().size() == 0) {
+			return;
+		}
+
+		// merge our enchants
+		is.addUnsafeEnchantments(hand.getEnchantments());
+
+		event.setCursor(new ItemStack(Material.AIR));
+		event.setCancelled(true);
+		event.setResult(Event.Result.DENY);
+
+		p.updateInventory();
 	}
 
 }
