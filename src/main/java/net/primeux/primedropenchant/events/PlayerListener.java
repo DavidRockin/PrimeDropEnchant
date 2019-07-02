@@ -113,6 +113,8 @@ public class PlayerListener implements Listener
 		event.setResult(Event.Result.DENY);
 
 		p.updateInventory();
+
+		p.sendMessage(getPlugin().getLocale().getLocale("enchanting.bookenchant.success"));
 	}
 
 }

@@ -3,6 +3,8 @@
 noPermission: '&cYou are not allowed to do that!'
 
 enchanting:
+  bookenchant:
+    success: '&bYou successfully enchanted this item'
   transfer:
     cancel: '&cYou cancelled the transfer.'
     success: '&bYou successfully transferred your enchantments and have been charged &f%cost%'
