@@ -85,4 +85,12 @@ public class GuiHandler
 		}
 	}
 
+	public static void closeAll()
+	{
+		for (Player p : getPlayerGuis().keySet()) {
+			p.closeInventory();
+		}
+		playerGuis.clear();
+	}
+
 }

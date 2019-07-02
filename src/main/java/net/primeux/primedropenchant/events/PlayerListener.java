@@ -39,7 +39,7 @@ public class PlayerListener implements Listener
 			return;
 		}
 
-		if (!p.hasPermission("primedrop.transfer") && !p.isOp()) {
+		if (!p.hasPermission("primedropenchant.transfer") && !p.isOp()) {
 			p.sendMessage(getPlugin().getLocale().getLocale("noPermission"));
 			return;
 		}

@@ -1,6 +1,10 @@
 main: net.primeux.primedropenchant.Plugin
 name: PrimeDropEnchant
 version: 1.0.0
-author: PrimeUX
+author: [The PrimeUX Team, David Tkachuk (LeRoche)]
 website: https://primeux.net
 depend: [Vault]
+
+commands:
+  primedropenchant:
+    aliases: [dropenchant, primedrop, primedropenchants]

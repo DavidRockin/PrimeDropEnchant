@@ -3,6 +3,7 @@ package net.primeux.primedropenchant;
 import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.economy.Economy;
+import net.primeux.primedropenchant.commands.PluginManagement;
 import net.primeux.primedropenchant.enchanting.EnchantmentHandler;
 import net.primeux.primedropenchant.events.PlayerListener;
 import net.primeux.primedropenchant.gui.GuiHandler;
@@ -35,10 +36,6 @@ public class Plugin extends JavaPlugin
 	private Map<String, Object> enchantmentContainers;
 
 	@Getter
-	@Setter
-	public boolean allowGuiTransfer = true;
-
-	@Getter
 	private ConfigHandler configHandler;
 
 	@Override
@@ -54,11 +51,17 @@ public class Plugin extends JavaPlugin
 		this.setup();
 		this.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 		this.getServer().getPluginManager().registerEvents(new GuiHandler(), this);
+		this.getCommand("primedropenchant").setExecutor(new PluginManagement(this));
 	}
 
 	@Override
 	public void onDisable()
 	{
+		GuiHandler.closeAll();
+		this.enchantmentHandler = null;
+		this.configHandler = null;
+		this.economy = null;
+		this.enchantmentContainers = null;
 	}
 
 	@Override
@@ -75,6 +78,8 @@ public class Plugin extends JavaPlugin
 	public void setup()
 	{
 		this.hooks();
+
+		GuiHandler.closeAll();
 
 		this.configHandler = new ConfigHandler(this);
 		this.configHandler.loadConfig("config", "config.yml", ConfigType.SETTINGS);
