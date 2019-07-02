@@ -19,7 +19,7 @@ enchantmentContainer:
   - '&bTransferred enchantments!'
 
 
-# defines which items can be enchanted via books
+# defines which items players can enchant items with via the use of books
 enchantWhitelist:
 - DIAMOND_AXE
 - DIAMOND_BOOTS
@@ -54,7 +54,7 @@ enchantWhitelist:
 - FISHING_ROD
 
 
-# defines which items can have enchanments transferred from
+# defines which items players can drop/transfer enchantments from
 transferWhitelist:
 - DIAMOND_AXE
 - DIAMOND_BOOTS
@@ -89,12 +89,19 @@ transferWhitelist:
 - FISHING_ROD
 
 
-# Configure which enchantments are allowed to be transferred
-# and their price to transfer. For currency, you can use `money` or `experience`
-# for a list of enchantment ID seek the Bukkit API:
-#   https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html
+# All available enchantments
+#
+# You can configure which enchantments players can drop or enchant.
+# For the currency, you can use either: money or experience
+# If money, the `cost.amount` can be a decimal, and will charge players'
+# economy balance (requires Vault). If its `experience` then it will take the
+# player's XP.
+#
+# The `id` field refers to the internal Bukkit enchantment API. Seek the resource below:
+#     https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html
+#
 # Note: For modded servers (ie: Tekkit), you can use custom enchantments as long as they extend
-# the vanilla enchantment system.
+# the vanilla enchantment system. Contact your mod pack's developer for help.
 enchantments:
 - id: ARROW_DAMAGE
   allow: true
