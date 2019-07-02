@@ -83,7 +83,8 @@ public class PlayerListener implements Listener
 
 		if (event.isCancelled() || !event.getClick().equals(ClickType.RIGHT) || is == null || is.getType().equals(Material.AIR) ||
 				hand == null || !hand.getType().equals(Material.ENCHANTED_BOOK) ||
-				!getPlugin().getConfig().getStringList("enchantWhitelist").contains(is.getType().toString())
+				!getPlugin().getConfig().getStringList("enchantWhitelist").contains(is.getType().toString()) ||
+				is.getAmount() != 1
 			) {
 			return;
 		}
