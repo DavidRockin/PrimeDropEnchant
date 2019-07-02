@@ -2,6 +2,7 @@ package net.primeux.primedropenchant.commands;
 
 import lombok.Getter;
 import net.primeux.primedropenchant.Plugin;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -63,7 +64,7 @@ public class PluginManagement implements CommandExecutor
 		cs.sendMessage(ChatColor.GRAY + "==========[ " + ChatColor.LIGHT_PURPLE + getPlugin().getDescription().getName() + " " + ChatColor.GRAY + "]==========");
 		cs.sendMessage(ChatColor.LIGHT_PURPLE + "Version: " + ChatColor.GRAY + getPlugin().getDescription().getVersion());
 		cs.sendMessage(ChatColor.LIGHT_PURPLE + "Website: " + ChatColor.GRAY + getPlugin().getDescription().getWebsite());
-		cs.sendMessage(ChatColor.LIGHT_PURPLE + "Built By: " + ChatColor.GRAY + getPlugin().getDescription().getAuthors().toString());
+		cs.sendMessage(ChatColor.LIGHT_PURPLE + "Built By: " + ChatColor.GRAY + StringUtils.join(getPlugin().getDescription().getAuthors().toArray(new String[0]), ", "));
 	}
 
 	/**
