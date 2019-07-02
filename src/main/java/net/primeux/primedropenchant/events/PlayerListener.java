@@ -39,6 +39,11 @@ public class PlayerListener implements Listener
 			return;
 		}
 
+		if (!p.hasPermission("primedrop.transfer") && !p.isOp()) {
+			p.sendMessage(getPlugin().getLocale().getLocale("noPermission"));
+			return;
+		}
+
 		List<Enchant> enchants = getPlugin().getEnchantmentHandler().getItemEnchantments(is, true);
 		if (enchants.size() == 0) {
 			p.sendMessage(getPlugin().getLocale().getLocale("enchanting.source.no-enchants"));

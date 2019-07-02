@@ -1,5 +1,7 @@
 # PrimeDropEnchant :: English Localization File
 
+noPermission: '&cYou are not allowed to do that!'
+
 enchanting:
   transfer:
     cancel: '&cYou cancelled the transfer.'
