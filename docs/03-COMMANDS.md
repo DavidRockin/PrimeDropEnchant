@@ -7,3 +7,4 @@ This general command manages the plugin, displaying general information and
 allows admins (with the permission node) to reload the configuration file.
 
 **Permission** primedropenchant.admin
+**Aliases** `/dropenchant, /primedrop, /primedropenchants, /pde`
