@@ -13,7 +13,7 @@ enchanting:
     unaffordable: '&cYou cannot afford this transfer: &f%cost%'
 
 gui:
-  title: '&3&l     KEEP     &8|&3&l   TRANSFER'
+  title: '&3&l     KEEP       TRANSFER'
   transfer:
     name: '&a&lTRANSFER ENCHANTMENTS'
     lore:
