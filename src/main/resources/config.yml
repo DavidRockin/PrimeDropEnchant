@@ -11,6 +11,10 @@
 locale: en
 
 
+# enable bStats analytic tracking
+metrics: true
+
+
 # the item to contain all transferred enchantments
 enchantmentContainer:
   type: ENCHANTED_BOOK

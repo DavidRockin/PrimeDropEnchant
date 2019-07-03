@@ -11,6 +11,7 @@ import net.primeux.primedropenchant.payment.*;
 import net.primeux.primedropenchant.storage.configuration.Config;
 import net.primeux.primedropenchant.storage.configuration.ConfigHandler;
 import net.primeux.primedropenchant.storage.configuration.ConfigType;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +20,9 @@ import java.util.Map;
 
 public class Plugin extends JavaPlugin
 {
+
+	@Getter
+	private Metrics metrics;
 
 	@Getter
 	private Economy economy = null;
@@ -90,6 +94,11 @@ public class Plugin extends JavaPlugin
 
 		this.enchantmentHandler = new EnchantmentHandler(this);
 		this.configParser.load();
+
+		// opt-in metrics, but default to enabled ;)
+		if (this.getConfig().getBoolean("metrics", true)) {
+			this.metrics = new Metrics(this);
+		}
 	}
 
 	protected void hooks()
